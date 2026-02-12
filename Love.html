@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Panda Valentine Cinematic 🐼❤️</title>
+<style>
+body { margin:0; font-family:'Comic Sans MS', cursive; background:#000; text-align:center; color:white; overflow-x:hidden;}
+#mainContent{display:none;}
+h1{margin-top:40px;font-size:40px;}
+button{padding:12px 25px;margin:10px;font-size:18px;border:none;border-radius:30px;background:black;color:white;cursor:pointer;transition:0.3s;}
+button:hover{background-color:#444;transform:scale(1.1);}
+.section{display:none;margin-top:30px;padding:20px;font-size:20px;}
+.panda{position:fixed;top:-50px;font-size:30px;animation:fall 6s linear infinite;cursor:pointer;}
+@keyframes fall{to{transform:translateY(110vh);}}
+.firework{position:fixed;font-size:30px;animation:explode 1s ease-out forwards;}
+@keyframes explode{from{transform:scale(0);opacity:1;}to{transform:scale(3);opacity:0;}}
+.gift-box{font-size:80px;cursor:pointer;transition:transform 0.5s;display:inline-block;margin:10px;}
+.gift-box:hover{transform:scale(1.2);}
+.big-surprise{font-size:28px;animation:zoom 1s infinite alternate;}
+@keyframes zoom{from{transform:scale(1);}to{transform:scale(1.1);}}
+input{padding:10px;font-size:18px;border-radius:20px;border:none;text-align:center;}
+.password-box{margin-top:150px;}
+img.gift-img{max-width:400px;border-radius:20px;display:block;margin:auto;}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div class="password-box" id="startScreen">
+<h1>🐼 Panda Valentine Surprise 🐼</h1>
+<p>Click below to start your Valentine Experience!</p>
+<button onclick="showPassword()">Start Surprise ❤️</button>
+</div>
+
+<!-- PASSWORD SCREEN -->
+<div class="password-box" id="passwordScreen" style="display:none;">
+<h1>🔐 Panda Only Access 🐼</h1>
+<input type="password" id="passwordInput" placeholder="Enter Love Password">
+<br><br>
+<button onclick="checkPassword()">Unlock Love ❤️</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+<h1>Happy Valentine’s Day Areesha ❤️</h1>
+<h2>My Forever Panda 🐼</h2>
+
+<div id="memory" class="section">
+💑 Our first date at Jaffer Canteen...<br><br>
+I was looking deeply into your eyes...<br><br>
+You said: <b>"aisy kyn dekh rhy ho??"</b> 😳<br><br>
+I replied: <b>"kyn na dekhun."</b> ❤️<br><br>
+That was the moment I knew my Panda is mine forever 🐼
+</div>
+
+<div id="giftBoxes" class="section">
+<button class="gift-box" onclick="showGift(1)">🎁 Gift 1</button>
+<button class="gift-box" onclick="showGift(2)">🎁 Gift 2</button>
+<button class="gift-box" onclick="showGift(3)">🎁 Gift 3</button>
+<button class="gift-box" onclick="showGift(4)">🎁 Gift 4</button>
+<button class="gift-box" onclick="showGift(5)">🎁 Precious Gift</button>
+</div>
+
+<!-- Gift Popups -->
+<div id="giftPopup" class="section" style="display:none;">
+<img id="giftImg" src="" class="gift-img" alt="Gift">
+<p class="big-surprise" id="giftMsg"></p>
+<button onclick="closeGift()">Close & Check Next Gift 🐼</button>
+</div>
+
+<audio id="bgMusic" loop>
+<source src="romantic_song.mp3" type="audio/mpeg">
+</audio>
+</div>
+
+<script>
+// Show password screen
+function showPassword(){
+    document.getElementById("startScreen").style.display="none";
+    document.getElementById("passwordScreen").style.display="block";
+}
+
+// Password
+const correctPassword = "zohan";
+function checkPassword(){
+    const entered=document.getElementById("passwordInput").value;
+    if(entered===correctPassword){
+        document.getElementById("passwordScreen").style.display="none";
+        document.getElementById("mainContent").style.display="block";
+        document.getElementById("bgMusic").play();
+        document.getElementById("memory").style.display="block";
+        document.getElementById("giftBoxes").style.display="block";
+        startFireworks();
+    }else{alert("Wrong Password! Only Panda Can Enter 🐼");}
+}
+
+// Gift info
+const gifts=[
+    {img:"iphone.png", msg:"Silver iPhone 17 Pro Max 🤍"},
+    {img:"chocolates.png", msg:"Heart-shaped Chocolates 🍫"},
+    {img:"cake.png", msg:"Valentine Cake 🎂"},
+    {img:"roses.png", msg:"Red Roses Bouquet 🌹"},
+    {img:"family.png", msg:"❤️ Our Family, Precious Gift ❤️"}
+];
+
+// Track opened gifts 1–4
+let giftsOpened=[false,false,false,false];
+
+function showGift(num){
+    // Check Precious Gift (5)
+    if(num===5){
+        if(giftsOpened.includes(false)){
+            alert("Please check the other gifts first! This is the last precious gift ❤️");
+            return;
+        }
+    }else{
+        giftsOpened[num-1]=true;
+    }
+    const gift=gifts[num-1];
+    document.getElementById("giftImg").src=gift.img;
+    document.getElementById("giftMsg").textContent=gift.msg;
+    document.getElementById("giftBoxes").style.display="none";
+    document.getElementById("giftPopup").style.display="block";
+}
+
+function closeGift(){
+    document.getElementById("giftPopup").style.display="none";
+    document.getElementById("giftBoxes").style.display="block";
+}
+
+// Fireworks
+function startFireworks(){
+    setInterval(()=>{
+        const firework=document.createElement("div");
+        firework.classList.add("firework");
+        firework.innerHTML="🎆";
+        firework.style.left=Math.random()*100+"vw";
+        firework.style.top=Math.random()*80+"vh";
+        document.body.appendChild(firework);
+        setTimeout(()=>firework.remove(),1000);
+    },300);
+}
+
+// Floating Pandas
+setInterval(function(){
+    const panda=document.createElement("div");
+    panda.classList.add("panda");
+    panda.innerHTML="🐼";
+    panda.style.left=Math.random()*100+"vw";
+    panda.style.fontSize=Math.random()*30+20+"px";
+    panda.onclick=()=>alert("🐼 Panda says I love you ❤️");
+    document.body.appendChild(panda);
+    setTimeout(()=>panda.remove(),6000);
+},500);
+</script>
+
+</body>
+</html>
